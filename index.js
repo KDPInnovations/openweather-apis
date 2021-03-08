@@ -144,6 +144,10 @@
   weather.getWeatherOneCall = function(callback){
     getData(buildPathOneCall(), callback);
   };
+    
+  weather.getCityName = function(callback){
+    getData(buildPathCityName(), callback);
+  };
 
   weather.getSmartJSON = function(callback){
     getSmart(callback);
@@ -185,6 +189,7 @@
       return callback(err, (jsonObj.weather)[0].description);
     });
   }
+    
 
   function getSmart(callback){
     getData(buildPath(), function(err,jsonObj){
@@ -242,6 +247,10 @@
 
   function buildPathOneCall(){
     return '/data/2.5/onecall?' + getCoordinate() + '&' + querystring.stringify({units: config.units, lang: config.lan, exclude: config.exclude, APPID: config.APPID});
+  }
+    
+  function buildPathCityName(){
+    return '/geo/1.0/reverse?' + getCoordinate() + '&' + querystring.stringify({limit: 1, APPID: config.APPID});
   }
 
   function getData(url, callback, tries){
